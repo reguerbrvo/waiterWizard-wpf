@@ -67,8 +67,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Padding="0" Margin="0">
-                            <Canvas x:Name="CanvasStats" MinWidth="480" MinHeight="360" Background="White"/>
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Padding="0" Margin="0">
+                            <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch">
+                                <Canvas x:Name="CanvasStats" MinWidth="480" MinHeight="360" Background="White"/>
+                            </Viewbox>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
