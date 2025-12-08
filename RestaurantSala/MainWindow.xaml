@@ -49,17 +49,55 @@
               MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" />
 
             <TabControl Grid.Column="1" Margin="12" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                <TabItem Header="Detalle" Padding="0">
-                    <StackPanel Margin="8">
-                        <TextBlock Text="Detalle Mesa" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
-                        <TextBlock Text="{Binding MesaSeleccionada.Nombre}" FontSize="16"/>
-                        <TextBlock Text="{Binding MesaSeleccionada.Estado}"/>
-                        <TextBlock Text="{Binding MesaSeleccionada.CapacidadMaxima, StringFormat=Capacidad: {0}}"/>
-                        <TextBlock Text="{Binding MesaSeleccionada.ComensalesActuales, StringFormat=Comensales: {0}}"/>
-                        <TextBlock Text="{Binding MesaSeleccionada.Id, StringFormat=Id: {0}}"/>
-                        <TextBlock Text="{Binding PlatosEnComandaSeleccionada, StringFormat=Platos en comanda: {0}}"/>
+                <TabItem Header="Detalle" Padding="0" Margin="0,0,0,4">
+                    <Border Margin="8" Padding="12" Background="#F7F9FB" BorderBrush="#D0D7E2" BorderThickness="1" CornerRadius="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                    </StackPanel>
+                            <Border Grid.Row="0" Background="#2D9CDB" CornerRadius="6" Padding="10" Margin="0,0,0,12">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🪑" FontSize="18" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Detalle de mesa" Foreground="White" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Nombre" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MesaSeleccionada.Nombre}" FontSize="16" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Estado" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MesaSeleccionada.Estado}" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Capacidad" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding MesaSeleccionada.CapacidadMaxima}" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Comensales" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding MesaSeleccionada.ComensalesActuales}" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Id" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding MesaSeleccionada.Id}" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Platos en comanda" FontWeight="SemiBold" Margin="0,0,12,0"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding PlatosEnComandaSeleccionada}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </TabItem>
                 <TabItem Header="Estadísticas">
                     <Grid>
