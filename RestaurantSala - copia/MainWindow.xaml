@@ -1,0 +1,78 @@
+﻿<Window x:Class="RestaurantSala.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sala Restaurante" Width="1100" Height="700">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Archivo">
+                <MenuItem Header="_Guardar sesión..." Click="OnGuardarSesionClick"/>
+                <MenuItem Header="_Cargar sesión..." Click="OnCargarSesionClick"/>
+                <Separator/>
+                <MenuItem Header="_Salir" Click="OnSalirClick"/>
+            </MenuItem>
+            <MenuItem Header="_Opciones">
+                <MenuItem x:Name="MenuNoPreguntar"
+            Header="_No preguntar antes de reiniciar sesión"
+            IsCheckable="True"
+            Loaded="OnMenuNoPreguntarLoaded"
+            Click="OnMenuNoPreguntarClick"/>
+            </MenuItem>
+
+        </Menu>
+        <Border DockPanel.Dock="Top" Background="#EEE" Padding="8">
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                <TextBlock Text="Comensales:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBox Width="60" Text="{Binding ComensalesEntrada, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,12,0"/>
+
+                <Button Content="Reservar" Command="{Binding CmdReservar}" Margin="0,0,8,0"/>
+                <Button Content="Ocupar (sin comanda)" Command="{Binding CmdOcuparSinComanda}" Margin="0,0,8,0"/>
+                <Button Content="Ocupar (con comanda)" Command="{Binding CmdOcuparConComanda}" Margin="0,0,8,0"/>
+                <Button Content="Liberar" Command="{Binding CmdLiberar}" Margin="0,0,8,0"/>
+                <Button Content="Editar comanda" Command="{Binding CmdEditarComanda}" Margin="0,0,8,0"/>
+
+                <Separator Width="16"/>
+                <Button Content="Nueva sesión" Command="{Binding CmdNuevaSesion}"/>
+                <Separator Width="16"/>
+                <Button Content="Abrir secundaria" Click="OnAbrirSecundariaClick"/>
+            </StackPanel>
+        </Border>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Canvas Grid.Column="0" x:Name="PlanoSala"
+              Background="#FFF8F8F8"
+              MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" />
+
+            <TabControl Grid.Column="1" Margin="12" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <TabItem Header="Detalle" Padding="0">
+                    <StackPanel Margin="8">
+                        <TextBlock Text="Detalle Mesa" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding MesaSeleccionada.Nombre}" FontSize="16"/>
+                        <TextBlock Text="{Binding MesaSeleccionada.Estado}"/>
+                        <TextBlock Text="{Binding MesaSeleccionada.CapacidadMaxima, StringFormat=Capacidad: {0}}"/>
+                        <TextBlock Text="{Binding MesaSeleccionada.ComensalesActuales, StringFormat=Comensales: {0}}"/>
+                        <TextBlock Text="{Binding MesaSeleccionada.Id, StringFormat=Id: {0}}"/>
+                        <TextBlock Text="{Binding PlatosEnComandaSeleccionada, StringFormat=Platos en comanda: {0}}"/>
+
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Estadísticas">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Padding="0" Margin="0">
+                            <Canvas x:Name="CanvasStats" MinWidth="480" MinHeight="360" Background="White"/>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</Window>
