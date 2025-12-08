@@ -149,10 +149,24 @@ namespace RestaurantSala
                 }
             }
 
-            if (!id.HasValue) return;
+            if (!id.HasValue)
+            {
+                ViewModel.MesaSeleccionada = null;
+                return;
+            }
 
             var mesa = ViewModel.Sesion.Mesas.FirstOrDefault(m => m.Id == id.Value);
-            if (mesa != null) ViewModel.MesaSeleccionada = mesa;
+            if (mesa != null)
+            {
+                if (ViewModel.MesaSeleccionada?.Id == mesa.Id)
+                {
+                    ViewModel.MesaSeleccionada = null;
+                }
+                else
+                {
+                    ViewModel.MesaSeleccionada = mesa;
+                }
+            }
         }
 
         private void DibujarSala()

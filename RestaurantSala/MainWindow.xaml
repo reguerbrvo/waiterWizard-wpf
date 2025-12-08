@@ -27,7 +27,6 @@
 
                 <Button Content="Reservar" Command="{Binding CmdReservar}" Margin="0,0,8,0"/>
                 <Button Content="Ocupar (sin comanda)" Command="{Binding CmdOcuparSinComanda}" Margin="0,0,8,0"/>
-                <Button Content="Ocupar (con comanda)" Command="{Binding CmdOcuparConComanda}" Margin="0,0,8,0"/>
                 <Button Content="Liberar" Command="{Binding CmdLiberar}" Margin="0,0,8,0"/>
                 <Button Content="Editar comanda" Command="{Binding CmdEditarComanda}" Margin="0,0,8,0"/>
 
@@ -64,7 +63,7 @@
                                 </StackPanel>
                             </Border>
 
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="1" RowSpacing="8" ColumnSpacing="12">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -78,22 +77,22 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Nombre" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MesaSeleccionada.Nombre}" FontSize="16" Margin="0,0,0,8"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Nombre" FontWeight="SemiBold"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MesaSeleccionada.Nombre}" FontSize="16"/>
 
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Estado" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MesaSeleccionada.Estado}" Margin="0,0,0,8"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Estado" FontWeight="SemiBold"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MesaSeleccionada.Estado}"/>
 
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Capacidad" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding MesaSeleccionada.CapacidadMaxima}" Margin="0,0,0,8"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Capacidad" FontWeight="SemiBold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding MesaSeleccionada.CapacidadMaxima}"/>
 
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Comensales" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding MesaSeleccionada.ComensalesActuales}" Margin="0,0,0,8"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Comensales" FontWeight="SemiBold"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding MesaSeleccionada.ComensalesActuales}"/>
 
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Id" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding MesaSeleccionada.Id}" Margin="0,0,0,8"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Id" FontWeight="SemiBold"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding MesaSeleccionada.Id}"/>
 
-                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Platos en comanda" FontWeight="SemiBold" Margin="0,0,12,0"/>
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Platos en comanda" FontWeight="SemiBold"/>
                                 <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding PlatosEnComandaSeleccionada}"/>
                             </Grid>
                         </Grid>
