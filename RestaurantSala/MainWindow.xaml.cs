@@ -475,7 +475,7 @@ namespace RestaurantSala
             var geo = new PathGeometry();
             geo.Figures.Add(fig);
 
-            var path = new Path { Data = geo, Fill = fill, Stroke = BR_ANILLO_STROKE, StrokeThickness = 0.4, ToolTip = tooltip };
+            var path = new System.Windows.Shapes.Path { Data = geo, Fill = fill, Stroke = BR_ANILLO_STROKE, StrokeThickness = 0.4, ToolTip = tooltip };
             PlanoSala.Children.Add(path);
         }
 
@@ -539,7 +539,7 @@ namespace RestaurantSala
         {
             try
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(UltimaSesionPath));
+                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(UltimaSesionPath));
                 JsonSesionStore.Guardar(ViewModel.Sesion, UltimaSesionPath);
             }
             catch { }
