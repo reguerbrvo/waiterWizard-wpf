@@ -5,17 +5,17 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Archivo">
-                <MenuItem Header="_Guardar sesión..." Click="MenuGuardar_Click"/>
-                <MenuItem Header="_Cargar sesión..." Click="MenuCargar_Click"/>
+                <MenuItem Header="_Guardar sesión..." Click="OnGuardarSesionClick"/>
+                <MenuItem Header="_Cargar sesión..." Click="OnCargarSesionClick"/>
                 <Separator/>
-                <MenuItem Header="_Salir" Click="MenuSalir_Click"/>
+                <MenuItem Header="_Salir" Click="OnSalirClick"/>
             </MenuItem>
             <MenuItem Header="_Opciones">
                 <MenuItem x:Name="MenuNoPreguntar"
             Header="_No preguntar antes de reiniciar sesión"
             IsCheckable="True"
-            Loaded="MenuNoPreguntar_Loaded"
-            Click="MenuNoPreguntar_Click"/>
+            Loaded="OnMenuNoPreguntarLoaded"
+            Click="OnMenuNoPreguntarClick"/>
             </MenuItem>
 
         </Menu>
@@ -34,23 +34,20 @@
                 <Separator Width="16"/>
                 <Button Content="Nueva sesión" Command="{Binding CmdNuevaSesion}"/>
                 <Separator Width="16"/>
-                <Button Content="Abrir secundaria" Click="AbrirSecundaria_Click"/>
+                <Button Content="Abrir secundaria" Click="OnAbrirSecundariaClick"/>
             </StackPanel>
         </Border>
 
-        <!-- Cuerpo principal -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Canvas del plano -->
             <Canvas Grid.Column="0" x:Name="PlanoSala"
               Background="#FFF8F8F8"
-              MouseLeftButtonDown="PlanoSala_MouseLeftButtonDown" />
+              MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" />
 
-            <!-- Panel derecho con Detalle y Estadísticas -->
             <TabControl Grid.Column="1" Margin="12" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <TabItem Header="Detalle" Padding="0">
                     <StackPanel Margin="8">

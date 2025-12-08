@@ -37,24 +37,20 @@ namespace RestaurantSala.Core.Models
             set { Set(ref _estado, value); }
         }
 
-        // Nº de comensales sentados actualmente (válido en Reservada/Ocupada*)
         public int ComensalesActuales
         {
             get { return _comensalesActuales; }
             set { Set(ref _comensalesActuales, value); }
         }
 
-        // Comanda activa (si Estado == OcupadaConComanda). Puede ser null.
         public Comanda ComandaActual
         {
             get { return _comandaActual; }
             set { Set(ref _comandaActual, value); }
         }
 
-        // Historial de comandas de la sesión (incluye grupos anteriores de la misma mesa)
         public List<Comanda> ComandasHistorial { get; } = new List<Comanda>();
 
-        // INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string prop = null)
         {

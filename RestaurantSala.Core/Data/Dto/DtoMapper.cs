@@ -59,11 +59,9 @@ namespace RestaurantSala.Core.Data.Dto
                 FechaFin = dto.FechaFin
             };
 
-            // Carta
             foreach (var p in dto.Carta)
                 s.Carta.Add(new Plato { Codigo = p.Codigo, Nombre = p.Nombre, Categoria = p.Categoria });
 
-            // Mesas
             foreach (var m in dto.Mesas)
             {
                 var mesa = new Mesa
@@ -75,7 +73,6 @@ namespace RestaurantSala.Core.Data.Dto
                     ComensalesActuales = m.ComensalesActuales
                 };
 
-                // Historial primero (para poder reutilizar objetos Plato de la carta)
                 foreach (var c in m.ComandasHistorial ?? new System.Collections.Generic.List<ComandaDto>())
                 {
                     var com = new Comanda
@@ -91,7 +88,6 @@ namespace RestaurantSala.Core.Data.Dto
                     mesa.ComandasHistorial.Add(com);
                 }
 
-                // Comanda actual
                 if (m.ComandaActual != null)
                 {
                     mesa.ComandaActual = new Comanda
