@@ -1,0 +1,6 @@
+C:\Users\34601\Documents\IGU\RestaurantSala.Core\bin\Debug\RestaurantSala.Core.dll
+C:\Users\34601\Documents\IGU\RestaurantSala.Core\bin\Debug\RestaurantSala.Core.pdb
+C:\Users\34601\Documents\IGU\RestaurantSala.Core\obj\Debug\RestaurantSala.Core.csproj.AssemblyReference.cache
+C:\Users\34601\Documents\IGU\RestaurantSala.Core\obj\Debug\RestaurantSala.Core.csproj.CoreCompileInputs.cache
+C:\Users\34601\Documents\IGU\RestaurantSala.Core\obj\Debug\RestaurantSala.Core.dll
+C:\Users\34601\Documents\IGU\RestaurantSala.Core\obj\Debug\RestaurantSala.Core.pdb
