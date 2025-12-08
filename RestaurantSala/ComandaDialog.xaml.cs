@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using RestaurantSala.Core.Models;
 
@@ -21,11 +21,12 @@ namespace RestaurantSala
 
         private void OnQuitarClick(object sender, RoutedEventArgs e)
         {
-            if (!(sender is Button { DataContext: LineaComanda linea }))
-            {
-                return;
-            }
-            _vm.QuitarLinea(linea);
+            var button = sender as Button;
+            if (button == null) return;
+
+            var linea = button.DataContext as LineaComanda;
+            if (linea != null)
+                _vm.QuitarLinea(linea);
         }
 
         private void OnOkClick(object sender, RoutedEventArgs e)
