@@ -13,14 +13,21 @@ namespace RestaurantSala
             _vm = vm;
             DataContext = _vm;
 
-            Loaded += (_, _) => SincronizarSeleccionTabla();
-            _vm.PropertyChanged += (_, e) =>
+            Loaded += OnLoaded;
+            _vm.PropertyChanged += OnViewModelPropertyChanged;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            SincronizarSeleccionTabla();
+        }
+
+        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SalaViewModel.MesaSeleccionada))
             {
-                if (e.PropertyName == nameof(SalaViewModel.MesaSeleccionada))
-                {
-                    SincronizarSeleccionTabla();
-                }
-            };
+                SincronizarSeleccionTabla();
+            }
         }
 
         private void SincronizarSeleccionTabla()
