@@ -67,7 +67,6 @@ namespace RestaurantSala
 
         public RelayCommand CmdReservar { get; private set; }
         public RelayCommand CmdOcuparSinComanda { get; private set; }
-        public RelayCommand CmdOcuparConComanda { get; private set; }
         public RelayCommand CmdLiberar { get; private set; }
         public RelayCommand CmdNuevaSesion { get; private set; }
         public event EventHandler SesionReiniciada;
@@ -80,7 +79,6 @@ namespace RestaurantSala
 
             CmdReservar = new RelayCommand(_ => CambiarAReservada(), _ => PuedeReservar());
             CmdOcuparSinComanda = new RelayCommand(_ => CambiarAOcupadaSinComanda(), _ => PuedeOcuparSinComanda());
-            CmdOcuparConComanda = new RelayCommand(_ => CambiarAOcupadaConComanda(), _ => PuedeOcuparConComanda());
             CmdLiberar = new RelayCommand(_ => CambiarALibre(), _ => PuedeLiberar());
             CmdNuevaSesion = new RelayCommand(_ => NuevaSesion(), _ => true);
             CmdEditarComanda = new RelayCommand(
@@ -98,7 +96,6 @@ namespace RestaurantSala
             if (!_comandosInicializados) return;
             CmdReservar?.RaiseCanExecuteChanged();
             CmdOcuparSinComanda?.RaiseCanExecuteChanged();
-            CmdOcuparConComanda?.RaiseCanExecuteChanged();
             CmdLiberar?.RaiseCanExecuteChanged();
             CmdEditarComanda?.RaiseCanExecuteChanged();
             CmdNuevaSesion?.RaiseCanExecuteChanged();
@@ -115,14 +112,6 @@ namespace RestaurantSala
             if (!TieneMesaSel()) return false;
             var e = MesaSeleccionada.Estado;
             return (e == EstadoMesa.Libre || e == EstadoMesa.Reservada) && ComensalesEntradaDentroDeAforoMinimo();
-        }
-        private bool PuedeOcuparConComanda()
-        {
-            if (!TieneMesaSel()) return false;
-            var e = MesaSeleccionada.Estado;
-            if (e == EstadoMesa.Libre || e == EstadoMesa.Reservada)
-                return ComensalesEntradaDentroDeAforoMinimo();
-            return e == EstadoMesa.OcupadaSinComanda;
         }
         private bool PuedeLiberar()
         {
@@ -149,32 +138,6 @@ namespace RestaurantSala
             if (!PuedeOcuparSinComanda()) { Aviso("No se puede ocupar (sin comanda). Revisa el estado y el aforo."); return; }
             MesaSeleccionada.Estado = EstadoMesa.OcupadaSinComanda;
             MesaSeleccionada.ComensalesActuales = ComensalesEntrada;
-            OnPropertyChanged(nameof(MesaSeleccionada));
-            ActualizarComandos();
-        }
-        private void CambiarAOcupadaConComanda()
-        {
-            if (!TieneMesaSel()) { return; }
-
-            if (MesaSeleccionada.ComandaActual == null)
-            {
-                MesaSeleccionada.ComandaActual = new Comanda
-                {
-                    MesaId = MesaSeleccionada.Id,
-                    FechaHora = System.DateTime.Now,
-                    Lineas = new System.Collections.Generic.List<LineaComanda>()
-                };
-                if (!MesaSeleccionada.ComandasHistorial.Contains(MesaSeleccionada.ComandaActual))
-                    MesaSeleccionada.ComandasHistorial.Add(MesaSeleccionada.ComandaActual);
-            }
-
-            if (MesaSeleccionada.Estado == EstadoMesa.Libre || MesaSeleccionada.Estado == EstadoMesa.Reservada)
-            {
-                if (!ComensalesEntradaDentroDeAforoMinimo()) { Aviso("Especifica comensales válidos antes de ocupar con comanda."); return; }
-                MesaSeleccionada.ComensalesActuales = ComensalesEntrada;
-            }
-
-            MesaSeleccionada.Estado = EstadoMesa.OcupadaConComanda;
             OnPropertyChanged(nameof(MesaSeleccionada));
             ActualizarComandos();
         }

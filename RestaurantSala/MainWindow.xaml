@@ -27,7 +27,6 @@
 
                 <Button Content="Reservar" Command="{Binding CmdReservar}" Margin="0,0,8,0"/>
                 <Button Content="Ocupar (sin comanda)" Command="{Binding CmdOcuparSinComanda}" Margin="0,0,8,0"/>
-                <Button Content="Ocupar (con comanda)" Command="{Binding CmdOcuparConComanda}" Margin="0,0,8,0"/>
                 <Button Content="Liberar" Command="{Binding CmdLiberar}" Margin="0,0,8,0"/>
                 <Button Content="Editar comanda" Command="{Binding CmdEditarComanda}" Margin="0,0,8,0"/>
 
