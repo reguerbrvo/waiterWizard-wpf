@@ -19,6 +19,15 @@ namespace RestaurantSala
     {
         private VentanaSecundaria _secundaria;
         private readonly Dictionary<string, Brush> _palette = new Dictionary<string, Brush>();
+        private readonly List<Brush> _pastelPalette = new List<Brush>
+        {
+            (Brush)new BrushConverter().ConvertFromString("#A5D8FF"),
+            (Brush)new BrushConverter().ConvertFromString("#B5EAD7"),
+            (Brush)new BrushConverter().ConvertFromString("#FFDFD3"),
+            (Brush)new BrushConverter().ConvertFromString("#E2F0CB"),
+            (Brush)new BrushConverter().ConvertFromString("#C7CEEA"),
+            (Brush)new BrushConverter().ConvertFromString("#FFD6A5"),
+        };
         private readonly Brush BR_PRIM = (Brush)new BrushConverter().ConvertFromString("#4E79A7");
         private readonly Brush BR_SEG = (Brush)new BrushConverter().ConvertFromString("#59A14F");
         private readonly Brush BR_POST = (Brush)new BrushConverter().ConvertFromString("#F28E2B");
@@ -219,13 +228,18 @@ namespace RestaurantSala
         {
             if (string.IsNullOrEmpty(key)) return Brushes.Gray;
             if (_palette.ContainsKey(key)) return _palette[key];
-            int h = key.GetHashCode();
-            byte r = (byte)(50 + (h & 0x7F));
-            byte g = (byte)(50 + ((h >> 7) & 0x7F));
-            byte b = (byte)(50 + ((h >> 14) & 0x7F));
-            var brush = new SolidColorBrush(Color.FromRgb(r, g, b));
+            int h = Math.Abs(key.GetHashCode());
+            int idx = h % _pastelPalette.Count;
+            var brush = _pastelPalette[idx];
             _palette[key] = brush;
             return brush;
+        }
+
+        private Brush GetPastelBrushByIndex(int index)
+        {
+            if (_pastelPalette.Count == 0) return Brushes.LightGray;
+            int safeIndex = ((index % _pastelPalette.Count) + _pastelPalette.Count) % _pastelPalette.Count;
+            return _pastelPalette[safeIndex];
         }
         private void RedibujarSalaManteniendoSeleccion()
         {
@@ -274,7 +288,7 @@ namespace RestaurantSala
                 {
                     Width = barW,
                     Height = h,
-                    Fill = Brushes.SteelBlue,
+                    Fill = GetPastelBrushByIndex(i),
                     Stroke = Brushes.DimGray,
                     StrokeThickness = 1,
                     ToolTip = $"Mesa {datos[i].Mesa.Id}: {datos[i].Total} platos"
