@@ -3,8 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Sala Restaurante" Width="1100" Height="700">
     <DockPanel>
-        <!-- Barra superior (igual que Fase 4/5; incluye Abrir secundaria y Editar comanda) -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Archivo">
+                <MenuItem Header="_Guardar sesión..." Click="MenuGuardar_Click"/>
+                <MenuItem Header="_Cargar sesión..." Click="MenuCargar_Click"/>
+                <Separator/>
+                <MenuItem Header="_Salir" Click="MenuSalir_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Opciones">
+                <MenuItem x:Name="MenuNoPreguntar"
+            Header="_No preguntar antes de reiniciar sesión"
+            IsCheckable="True"
+            Loaded="MenuNoPreguntar_Loaded"
+            Click="MenuNoPreguntar_Click"/>
+            </MenuItem>
+
+        </Menu>
         <Border DockPanel.Dock="Top" Background="#EEE" Padding="8">
+
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                 <TextBlock Text="Comensales:" VerticalAlignment="Center" Margin="0,0,8,0"/>
                 <TextBox Width="60" Text="{Binding ComensalesEntrada, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,12,0"/>
@@ -25,7 +41,7 @@
         <!-- Cuerpo principal -->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
@@ -36,13 +52,16 @@
 
             <!-- Panel derecho con Detalle y Estadísticas -->
             <TabControl Grid.Column="1" Margin="12" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                <TabItem Header="Estadísticas" Padding="0">
+                <TabItem Header="Detalle" Padding="0">
                     <StackPanel Margin="8">
                         <TextBlock Text="Detalle Mesa" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
                         <TextBlock Text="{Binding MesaSeleccionada.Nombre}" FontSize="16"/>
                         <TextBlock Text="{Binding MesaSeleccionada.Estado}"/>
                         <TextBlock Text="{Binding MesaSeleccionada.CapacidadMaxima, StringFormat=Capacidad: {0}}"/>
                         <TextBlock Text="{Binding MesaSeleccionada.ComensalesActuales, StringFormat=Comensales: {0}}"/>
+                        <TextBlock Text="{Binding MesaSeleccionada.Id, StringFormat=Id: {0}}"/>
+                        <TextBlock Text="{Binding PlatosEnComandaSeleccionada, StringFormat=Platos en comanda: {0}}"/>
+
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Estadísticas">

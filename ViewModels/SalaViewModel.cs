@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using RestaurantSala.Core.Data;
@@ -8,7 +9,35 @@ namespace RestaurantSala
 {
     public class SalaViewModel : ObservableObject
     {
-        public Sesion Sesion { get; private set; }
+        private bool _comandosInicializados;
+        public Func<bool> ConfirmarReinicioSesion; 
+        private Sesion _sesion;
+        public Sesion Sesion
+        {
+            get { return _sesion; }
+            set
+            {
+                if (ReferenceEquals(_sesion, value)) return;
+                _sesion = value;
+
+                // Refresca la colección existente de Mesas
+                if (Mesas != null)
+                {
+                    Mesas.Clear();
+                    foreach (var m in _sesion.Mesas) Mesas.Add(m);
+                    OnPropertyChanged(nameof(Mesas));
+                }
+                else
+                {
+                     Mesas = new ObservableCollection<Mesa>(_sesion.Mesas);
+                     OnPropertyChanged(nameof(Mesas));
+                }
+
+                OnPropertyChanged(nameof(Sesion));
+                MesaSeleccionada = null;
+                ActualizarComandos();
+            }
+        }
         public ObservableCollection<Mesa> Mesas { get; private set; }
 
         public RelayCommand CmdEditarComanda { get; private set; }
@@ -33,6 +62,11 @@ namespace RestaurantSala
                 }
             }
         }
+        public int PlatosEnComandaSeleccionada =>
+    (MesaSeleccionada != null && MesaSeleccionada.ComandaActual != null)
+    ? MesaSeleccionada.ComandaActual.TotalPlatos()
+    : 0;
+
 
         // Comandos de estado
         public RelayCommand CmdReservar { get; private set; }
@@ -40,28 +74,38 @@ namespace RestaurantSala
         public RelayCommand CmdOcuparConComanda { get; private set; }
         public RelayCommand CmdLiberar { get; private set; }
         public RelayCommand CmdNuevaSesion { get; private set; }
+        public event EventHandler SesionReiniciada;
 
         public SalaViewModel()
         {
             Sesion = DemoData.CrearSesionDemo();
+
             Mesas = new ObservableCollection<Mesa>(Sesion.Mesas);
 
             CmdReservar = new RelayCommand(_ => CambiarAReservada(), _ => PuedeReservar());
             CmdOcuparSinComanda = new RelayCommand(_ => CambiarAOcupadaSinComanda(), _ => PuedeOcuparSinComanda());
             CmdOcuparConComanda = new RelayCommand(_ => CambiarAOcupadaConComanda(), _ => PuedeOcuparConComanda());
             CmdLiberar = new RelayCommand(_ => CambiarALibre(), _ => PuedeLiberar());
-            CmdNuevaSesion = new RelayCommand(_ => NuevaSesion());
-            CmdEditarComanda = new RelayCommand(_ => EditarComanda(), _ => MesaSeleccionada != null);
+            CmdNuevaSesion = new RelayCommand(_ => NuevaSesion(), _ => true);
+            CmdEditarComanda = new RelayCommand(
+                _ => EditarComanda(),
+                _ => MesaSeleccionada != null &&
+                     (MesaSeleccionada.Estado == EstadoMesa.OcupadaSinComanda ||
+                      MesaSeleccionada.Estado == EstadoMesa.OcupadaConComanda)
+            );
+            _comandosInicializados = true;
+
         }
 
         private void ActualizarComandos()
         {
-            CmdReservar.RaiseCanExecuteChanged();
-            CmdOcuparSinComanda.RaiseCanExecuteChanged();
-            CmdOcuparConComanda.RaiseCanExecuteChanged();
-            CmdLiberar.RaiseCanExecuteChanged();
-            if (CmdEditarComanda != null) CmdEditarComanda.RaiseCanExecuteChanged();
-
+            if (!_comandosInicializados) return;
+            CmdReservar?.RaiseCanExecuteChanged();
+            CmdOcuparSinComanda?.RaiseCanExecuteChanged();
+            CmdOcuparConComanda?.RaiseCanExecuteChanged();
+            CmdLiberar?.RaiseCanExecuteChanged();
+            CmdEditarComanda?.RaiseCanExecuteChanged();
+            CmdNuevaSesion?.RaiseCanExecuteChanged();
         }
 
         private bool TieneMesaSel() { return MesaSeleccionada != null; }
@@ -158,15 +202,35 @@ namespace RestaurantSala
             ActualizarComandos();
         }
 
-        private void NuevaSesion()
+        public void NuevaSesion()
         {
-            // Reinicializa la sesión de demo y vuelve a enlazar la colección de mesas
-            Sesion = DemoData.CrearSesionDemo();
-            Mesas = new ObservableCollection<Mesa>(Sesion.Mesas);
-            OnPropertyChanged(nameof(Sesion));
-            OnPropertyChanged(nameof(Mesas));
+
+            if (ConfirmarReinicioSesion != null && !ConfirmarReinicioSesion())
+                return;
+
+            // 1) Limpiar selección y entrada de comensales
             MesaSeleccionada = null;
+            ComensalesEntrada = 0;
+
+
+            // 2) Reiniciar el estado de TODAS las mesas (ENUNCIADO 4)
+            foreach (var m in Sesion.Mesas)
+            {
+                m.Estado = EstadoMesa.Libre;
+                m.ComensalesActuales = 0;
+                m.ComandaActual = null;
+                m.ComandasHistorial.Clear(); // NUEVA SESIÓN => historial vacío (se guarda por sesión)
+            }
+
+
+            // 3) Notificar cambios globales (para grids/secundaria/estadísticas)
+            OnPropertyChanged(nameof(Mesas)); // si expones "Mesas" desde el VM
+            OnPropertyChanged(nameof(MesaSeleccionada));
             ActualizarComandos();
+
+
+            // 4) Aviso opcional (evento) para que vistas hagan refresco visual extra si lo necesitan
+            SesionReiniciada?.Invoke(this, EventArgs.Empty);
         }
 
         private void Aviso(string msg)
@@ -177,36 +241,56 @@ namespace RestaurantSala
         {
             if (MesaSeleccionada == null) return;
 
-            // Asegurar ComandaActual (si no existe, crearla y agregar al historial)
-            if (MesaSeleccionada.ComandaActual == null)
-            {
-                MesaSeleccionada.ComandaActual = new Comanda
-                {
-                    MesaId = MesaSeleccionada.Id,
-                    FechaHora = System.DateTime.Now,
-                    Lineas = new System.Collections.Generic.List<LineaComanda>()
-                };
-                if (!MesaSeleccionada.ComandasHistorial.Contains(MesaSeleccionada.ComandaActual))
-                    MesaSeleccionada.ComandasHistorial.Add(MesaSeleccionada.ComandaActual);
-            }
+            // 1) NO crear ComandaActual por adelantado. Solo preparar líneas iniciales.
+            var lineasIniciales = (MesaSeleccionada.ComandaActual != null)
+                ? MesaSeleccionada.ComandaActual.Lineas
+                : new System.Collections.Generic.List<LineaComanda>();
 
-            var vm = new ComandaEditorViewModel(Sesion.Carta, MesaSeleccionada.ComandaActual.Lineas);
-            var dlg = new ComandaDialog(vm) { Owner = Application.Current.MainWindow };
+            var vm = new ComandaEditorViewModel(Sesion.Carta, lineasIniciales);
+            var dlg = new ComandaDialog(vm) { Owner = System.Windows.Application.Current.MainWindow };
             var ok = dlg.ShowDialog();
             if (ok == true)
             {
-                // Reemplazar las líneas por el resultado del editor
-                MesaSeleccionada.ComandaActual.Lineas = vm.ConstruirResultado();
+                // 2) Recoger resultado
+                var resultado = vm.ConstruirResultado();
 
-                // Si la mesa estaba Libre/Reservada/OcupadaSinComanda, pasar a OcupadaConComanda
-                if (MesaSeleccionada.Estado != EstadoMesa.OcupadaConComanda)
+                // 3) Si NO hay líneas ⇒ NO hay comanda. Mantener OcupadaSinComanda (o el estado previo) y ComandaActual=null
+                if (resultado == null || resultado.Count == 0)
                 {
-                    MesaSeleccionada.Estado = EstadoMesa.OcupadaConComanda;
-                    if (MesaSeleccionada.ComensalesActuales == 0 && ComensalesEntradaDentroDeAforoMinimo())
-                        MesaSeleccionada.ComensalesActuales = ComensalesEntrada;
+                    // Si existía un cascarón, lo anulamos
+                    MesaSeleccionada.ComandaActual = null;
+                    if (MesaSeleccionada.Estado == EstadoMesa.OcupadaConComanda)
+                        MesaSeleccionada.Estado = EstadoMesa.OcupadaSinComanda; // mantiene ocupación, sin comanda
+
+                    OnPropertyChanged(nameof(MesaSeleccionada));
+                    ActualizarComandos();
+                    return;
                 }
 
-                // Notificar para refrescar panel y ventana secundaria
+                // 4) Con líneas ⇒ asegurar ComandaActual y estado
+                if (MesaSeleccionada.ComandaActual == null)
+                {
+                    MesaSeleccionada.ComandaActual = new Comanda
+                    {
+                        MesaId = MesaSeleccionada.Id,
+                        FechaHora = System.DateTime.Now,
+                        Lineas = new System.Collections.Generic.List<LineaComanda>()
+                    };
+                    MesaSeleccionada.ComandasHistorial.Add(MesaSeleccionada.ComandaActual);
+                }
+
+                // Reemplazar líneas
+                MesaSeleccionada.ComandaActual.Lineas = resultado;
+
+                // Promocionar a OcupadaConComanda solo si procede
+                if (MesaSeleccionada.Estado != EstadoMesa.OcupadaConComanda)
+                    MesaSeleccionada.Estado = EstadoMesa.OcupadaConComanda;
+
+                // 5) NO pisar comensales: solo establecer si había 0 y el usuario introdujo un valor > 0
+                if (MesaSeleccionada.ComensalesActuales == 0 && ComensalesEntrada > 0 && ComensalesEntradaDentroDeAforoMinimo())
+                    MesaSeleccionada.ComensalesActuales = ComensalesEntrada;
+
+                // 6) Notificar para refrescar panel/estadísticas/mini-gráfico
                 OnPropertyChanged(nameof(MesaSeleccionada));
                 ActualizarComandos();
             }
