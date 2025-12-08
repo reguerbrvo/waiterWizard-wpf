@@ -8,11 +8,10 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Tabla 1: Mesas -->
         <DataGrid x:Name="dgMesas" Grid.Column="0" AutoGenerateColumns="False"
               ItemsSource="{Binding Mesas}"
               SelectionMode="Single"
-              SelectionChanged="dgMesas_SelectionChanged">
+              SelectionChanged="OnMesasSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*"/>
@@ -22,7 +21,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Tabla 2: Comanda de la mesa seleccionada (si hay) -->
         <DataGrid Grid.Column="1" AutoGenerateColumns="False"
               ItemsSource="{Binding MesaSeleccionada.ComandaActual.Lineas}"
               IsReadOnly="True">

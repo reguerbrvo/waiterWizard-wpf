@@ -12,7 +12,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Carta y alta de línea -->
         <StackPanel Grid.Column="0" Margin="0,0,10,0">
             <TextBlock Text="Carta" FontWeight="Bold" Margin="0,0,0,8"/>
             <ListBox ItemsSource="{Binding Carta}" SelectedItem="{Binding PlatoSeleccionado}" DisplayMemberPath="Nombre" Height="260"/>
@@ -20,11 +19,10 @@
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                 <TextBlock Text="Cantidad:" VerticalAlignment="Center" Margin="0,0,8,0"/>
                 <TextBox Width="60" Text="{Binding Cantidad, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Añadir" Margin="12,0,0,0" Width="90" Click="BtnAgregar_Click"/>
+                <Button Content="Añadir" Margin="12,0,0,0" Width="90" Click="OnAgregarClick"/>
             </StackPanel>
         </StackPanel>
 
-        <!-- Lineas de comanda -->
         <DataGrid Grid.Column="1" ItemsSource="{Binding Lineas}" AutoGenerateColumns="False" Height="320">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Plato" Binding="{Binding Plato.Nombre}" Width="*"/>
@@ -33,16 +31,15 @@
                 <DataGridTemplateColumn Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Quitar" Padding="6,2" Click="BtnQuitar_Click"/>
+                            <Button Content="Quitar" Padding="6,2" Click="OnQuitarClick"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Botonera -->
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
-            <Button Content="Aceptar" Width="100" Margin="0,0,8,0" IsDefault="True" Click="BtnOk_Click"/>
+            <Button Content="Aceptar" Width="100" Margin="0,0,8,0" IsDefault="True" Click="OnOkClick"/>
             <Button Content="Cancelar" Width="100" IsCancel="True"/>
         </StackPanel>
     </Grid>

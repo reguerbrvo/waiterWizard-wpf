@@ -5,13 +5,11 @@ namespace RestaurantSala.Core.Utils
 {
     public static class Estadisticas
     {
-        // Total de platos servidos por mesa (histórico de la sesión)
         public static int TotalPlatosServidos(Mesa mesa)
         {
             return mesa.ComandasHistorial.Sum(c => c.TotalPlatos());
         }
 
-        // Desglose por categoría para una mesa
         public static (int primeros, int segundos, int postres) TotalesPorCategoria(Mesa mesa)
         {
             int p = mesa.ComandasHistorial.Sum(c => c.TotalPorCategoria(CategoriaPlato.Primero));

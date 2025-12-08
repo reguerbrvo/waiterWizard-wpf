@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace RestaurantSala
@@ -12,17 +11,23 @@ namespace RestaurantSala
         {
             InitializeComponent();
             _vm = vm;
-            this.DataContext = _vm; // MISMA instancia que la principal
+            DataContext = _vm;
 
-            // Preseleccionar la fila de la mesa actualmente seleccionada
-            this.Loaded += (s, e) => SincronizarSeleccionTabla();
+            Loaded += OnLoaded;
+            _vm.PropertyChanged += OnViewModelPropertyChanged;
+        }
 
-            // Escuchar cambios para que al cambiar MesaSeleccionada desde Canvas se mueva la selección en la tabla
-            _vm.PropertyChanged += (s, e) =>
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            SincronizarSeleccionTabla();
+        }
+
+        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SalaViewModel.MesaSeleccionada))
             {
-                if (e.PropertyName == nameof(SalaViewModel.MesaSeleccionada))
-                    SincronizarSeleccionTabla();
-            };
+                SincronizarSeleccionTabla();
+            }
         }
 
         private void SincronizarSeleccionTabla()
@@ -33,12 +38,10 @@ namespace RestaurantSala
             dgMesas.ScrollIntoView(target);
         }
 
-        private void dgMesas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnMesasSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var mesa = dgMesas.SelectedItem as Core.Models.Mesa;
-            if (mesa != null)
+            if (dgMesas.SelectedItem is Core.Models.Mesa mesa)
             {
-                // Cambiar la selección en la VM ==> principal resaltará por VM.PropertyChanged
                 _vm.MesaSeleccionada = mesa;
             }
         }
