@@ -36,12 +36,10 @@ namespace RestaurantSala
         public void AgregarLinea()
         {
             if (PlatoSeleccionado == null) return;
-            // Si ya existe ese plato, sumamos cantidades
             var existente = Lineas.FirstOrDefault(l => l.Plato.Codigo == PlatoSeleccionado.Codigo);
             if (existente != null)
             {
                 existente.Cantidad += Cantidad;
-                // Notificar cambio manual (LineaComanda no implementa INotifyPropertyChanged)
                 var idx = Lineas.IndexOf(existente);
                 Lineas.RemoveAt(idx);
                 Lineas.Insert(idx, existente);
@@ -58,7 +56,6 @@ namespace RestaurantSala
             Lineas.Remove(linea);
         }
 
-        // Devuelve una copia List<> para asignar a ComandaActual.Lineas
         public List<LineaComanda> ConstruirResultado()
         {
             return Lineas.Select(l => new LineaComanda { Plato = l.Plato, Cantidad = l.Cantidad }).ToList();

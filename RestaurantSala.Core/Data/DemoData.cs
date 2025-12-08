@@ -11,10 +11,9 @@ namespace RestaurantSala.Core.Data
         {
             var sesion = new Sesion
             {
-                FechaInicio = DateTime.Today.AddHours(13) // servicio comida
+                FechaInicio = DateTime.Today.AddHours(13)
             };
 
-            // Carta (>= 3 por categoría)
             var carta = new List<Plato>
             {
                 new Plato { Codigo = "P01", Nombre = "Ensalada mixta", Categoria = CategoriaPlato.Primero },
@@ -31,7 +30,6 @@ namespace RestaurantSala.Core.Data
             };
             sesion.Carta.AddRange(carta);
 
-            // Mesas (>= 5, aforos variados)
             sesion.Mesas.AddRange(new[]
             {
                 new Mesa { Id = 1, Nombre = "Mesa 1", CapacidadMaxima = 2, Estado = EstadoMesa.OcupadaConComanda, ComensalesActuales = 2 },
@@ -42,13 +40,11 @@ namespace RestaurantSala.Core.Data
                 new Mesa { Id = 6, Nombre = "Mesa 6", CapacidadMaxima = 2, Estado = EstadoMesa.Libre }
             });
 
-            // Comandas de ejemplo (>= 3 mesas con comanda)
             var m1 = sesion.Mesas.First(m => m.Id == 1);
-            var m2 = sesion.Mesas.First(m => m.Id == 2); // reservado para futuras pruebas
-            var m3 = sesion.Mesas.First(m => m.Id == 3); // reservado para futuras pruebas
+            var m2 = sesion.Mesas.First(m => m.Id == 2);
+            var m3 = sesion.Mesas.First(m => m.Id == 3);
             var m5 = sesion.Mesas.First(m => m.Id == 5);
 
-            // Mesa 1: comanda activa
             m1.ComandaActual = new Comanda
             {
                 MesaId = 1,
@@ -62,13 +58,6 @@ namespace RestaurantSala.Core.Data
             };
             m1.ComandasHistorial.Add(m1.ComandaActual);
 
-            // Mesa 2: ocupada SIN comanda (cumple el estado intermedio)
-            // (Sin ComandaActual; sin historial todavía)
-
-            // Mesa 3: RESERVADA (sin comanda aún)
-
-            // Mesa 5: comanda activa y además un grupo anterior en la MISMA SESIÓN
-            // Grupo anterior (ya terminó):
             var comandaAnteriorM5 = new Comanda
             {
                 MesaId = 5,
@@ -82,7 +71,6 @@ namespace RestaurantSala.Core.Data
             };
             m5.ComandasHistorial.Add(comandaAnteriorM5);
 
-            // Grupo actual (activo):
             m5.ComandaActual = new Comanda
             {
                 MesaId = 5,

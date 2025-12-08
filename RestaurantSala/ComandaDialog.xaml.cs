@@ -11,25 +11,26 @@ namespace RestaurantSala
         {
             InitializeComponent();
             _vm = vm;
-            this.DataContext = _vm;
+            DataContext = _vm;
         }
 
-        private void BtnAgregar_Click(object sender, RoutedEventArgs e)
+        private void OnAgregarClick(object sender, RoutedEventArgs e)
         {
             _vm.AgregarLinea();
         }
 
-        private void BtnQuitar_Click(object sender, RoutedEventArgs e)
+        private void OnQuitarClick(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button; if (btn == null) return;
-            var linea = btn.DataContext as LineaComanda;
-            _vm.QuitarLinea(linea);
+            if (sender is Button { DataContext: LineaComanda linea })
+            {
+                _vm.QuitarLinea(linea);
+            }
         }
 
-        private void BtnOk_Click(object sender, RoutedEventArgs e)
+        private void OnOkClick(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-            this.Close();
+            DialogResult = true;
+            Close();
         }
     }
 }
