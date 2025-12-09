@@ -26,7 +26,7 @@
                 <TextBox Width="60" Text="{Binding ComensalesEntrada, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,12,0"/>
 
                 <Button Content="Reservar" Command="{Binding CmdReservar}" Margin="0,0,8,0"/>
-                <Button Content="Ocupar (sin comanda)" Command="{Binding CmdOcuparSinComanda}" Margin="0,0,8,0"/>
+                <Button Content="Ocupar " Command="{Binding CmdOcuparSinComanda}" Margin="0,0,8,0"/>
                 <Button Content="Liberar" Command="{Binding CmdLiberar}" Margin="0,0,8,0"/>
                 <Button Content="Editar comanda" Command="{Binding CmdEditarComanda}" Margin="0,0,8,0"/>
 
@@ -45,11 +45,11 @@
 
             <Canvas Grid.Column="0" x:Name="PlanoSala"
               Background="#FFF8F8F8"
-              MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" />
+              MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" Margin="0,0,549,0" />
 
             <TabControl Grid.Column="1" Margin="12" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                <TabItem Header="Detalle" Padding="0" Margin="0,0,0,4">
-                    <Border Margin="8" Padding="12" Background="#F7F9FB" BorderBrush="#D0D7E2" BorderThickness="1" CornerRadius="8">
+                <TabItem Header="Detalle" Padding="0">
+                    <Border Margin="0" Padding="12" Background="#F7F9FB" BorderBrush="#D0D7E2" BorderThickness="1" CornerRadius="8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -58,7 +58,7 @@
 
                             <Border Grid.Row="0" Background="#2D9CDB" CornerRadius="6" Padding="10" Margin="0,0,0,12">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🪑" FontSize="18" VerticalAlignment="Center"/>
+                                    <TextBlock Text="☰" FontSize="18" VerticalAlignment="Center"/>
                                     <TextBlock Text="Detalle de mesa" Foreground="White" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="8,0,0,0"/>
                                 </StackPanel>
                             </Border>
@@ -98,7 +98,7 @@
                         </Grid>
                     </Border>
                 </TabItem>
-                <TabItem Header="Estadísticas">
+                <TabItem Header="Estadísticas" Margin="0,-2,-4,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
