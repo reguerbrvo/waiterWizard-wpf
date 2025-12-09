@@ -45,7 +45,14 @@ namespace RestaurantSala
         public Mesa MesaSeleccionada
         {
             get { return _mesaSeleccionada; }
-            set { if (Set(ref _mesaSeleccionada, value)) { ActualizarComandos(); } }
+            set
+            {
+                if (Set(ref _mesaSeleccionada, value))
+                {
+                    NotificarPlatosEnComanda();
+                    ActualizarComandos();
+                }
+            }
         }
 
         private int _comensalesEntrada;
@@ -148,6 +155,7 @@ namespace RestaurantSala
             MesaSeleccionada.ComensalesActuales = 0;
             MesaSeleccionada.Estado = EstadoMesa.Libre;
             OnPropertyChanged(nameof(MesaSeleccionada));
+            NotificarPlatosEnComanda();
             ActualizarComandos();
         }
 
@@ -201,6 +209,7 @@ namespace RestaurantSala
                         MesaSeleccionada.Estado = EstadoMesa.OcupadaSinComanda;
 
                     OnPropertyChanged(nameof(MesaSeleccionada));
+                    NotificarPlatosEnComanda();
                     ActualizarComandos();
                     return;
                 }
@@ -225,8 +234,14 @@ namespace RestaurantSala
                     MesaSeleccionada.ComensalesActuales = ComensalesEntrada;
 
                 OnPropertyChanged(nameof(MesaSeleccionada));
+                NotificarPlatosEnComanda();
                 ActualizarComandos();
             }
+        }
+
+        private void NotificarPlatosEnComanda()
+        {
+            OnPropertyChanged(nameof(PlatosEnComandaSeleccionada));
         }
     }
 }
