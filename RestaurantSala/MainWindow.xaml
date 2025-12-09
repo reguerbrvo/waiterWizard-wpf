@@ -75,8 +75,6 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -93,14 +91,8 @@
                                     <TextBlock Text="{Binding MesaSeleccionada.Estado}"/>
                                 </StackPanel>
 
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Capacidad" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding MesaSeleccionada.CapacidadMaxima}" Margin="0,0,0,8"/>
-
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Comensales" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding MesaSeleccionada.ComensalesActuales}" Margin="0,0,0,8"/>
-
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Ocupación" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <Border Grid.Row="4" Grid.Column="1" Padding="10,6" CornerRadius="8" Margin="0,0,0,8">
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Ocupación" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <Border Grid.Row="2" Grid.Column="1" Padding="10,6" CornerRadius="8" Margin="0,0,0,8">
                                     <Border.Background>
                                         <MultiBinding Converter="{StaticResource OcupacionToBrushConverter}">
                                             <Binding Path="MesaSeleccionada.ComensalesActuales"/>
@@ -117,11 +109,11 @@
                                     </TextBlock>
                                 </Border>
 
-                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Id" FontWeight="SemiBold" Margin="0,0,12,8"/>
-                                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding MesaSeleccionada.Id}" Margin="0,0,0,8"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Id" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding MesaSeleccionada.Id}" Margin="0,0,0,8"/>
 
-                                <TextBlock Grid.Row="6" Grid.Column="0" Text="Platos en comanda" FontWeight="SemiBold" Margin="0,0,12,0"/>
-                                <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding PlatosEnComandaSeleccionada}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Platos en comanda" FontWeight="SemiBold" Margin="0,0,12,0"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding PlatosEnComandaSeleccionada}"/>
                             </Grid>
                         </Grid>
                     </Border>
