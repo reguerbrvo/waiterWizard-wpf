@@ -6,7 +6,7 @@
     <Window.Resources>
         <conv:EstadoToBrushConverter x:Key="EstadoToBrushConverter"/>
         <conv:OcupacionToBrushConverter x:Key="OcupacionToBrushConverter"/>
-        <Style x:Key="ActionButtonStyle" TargetType="Button">
+        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
             <Setter Property="Padding" Value="12,8"/>
             <Setter Property="MinWidth" Value="130"/>
             <Setter Property="Margin" Value="0,0,10,0"/>
