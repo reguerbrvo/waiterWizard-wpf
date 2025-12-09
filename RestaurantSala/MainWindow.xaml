@@ -12,6 +12,11 @@
             <Setter Property="MinWidth" Value="130"/>
             <Setter Property="Margin" Value="0,0,10,0"/>
         </Style>
+        <Style x:Key="TopBarButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Padding" Value="14,9"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -30,22 +35,52 @@
             </MenuItem>
 
         </Menu>
-        <Border DockPanel.Dock="Top" Background="#EEE" Padding="8">
+        <Border DockPanel.Dock="Top" Background="#EEF1F5" Padding="14">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                <TextBlock Text="Comensales:" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                <TextBox Width="60" Text="{Binding ComensalesEntrada, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,12,0"/>
+                <Border Grid.Column="0" Background="White" Padding="10" CornerRadius="10"
+                        BorderBrush="#D5DAE0" BorderThickness="1" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Comensales" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBox Width="70" VerticalContentAlignment="Center"
+                                 Text="{Binding ComensalesEntrada, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Border>
 
-                <Button Content="Reservar" Command="{Binding CmdReservar}" Margin="0,0,8,0"/>
-                <Button Content="Ocupar " Command="{Binding CmdOcuparSinComanda}" Margin="0,0,8,0"/>
-                <Button Content="Liberar" Command="{Binding CmdLiberar}" Margin="0,0,8,0"/>
-                <Button Content="Editar comanda" Command="{Binding CmdEditarComanda}" Margin="0,0,8,0"/>
+                <Grid Grid.Column="1" Margin="16,0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0" VerticalAlignment="Center" ItemHeight="36" ItemWidth="140">
+                        <Button Content="Reservar" Command="{Binding CmdReservar}" Style="{StaticResource TopBarButtonStyle}"/>
+                        <Button Content="Ocupar" Command="{Binding CmdOcuparSinComanda}" Style="{StaticResource TopBarButtonStyle}"/>
+                        <Button Content="Liberar" Command="{Binding CmdLiberar}" Style="{StaticResource TopBarButtonStyle}"/>
+                        <Button Content="Editar comanda" Command="{Binding CmdEditarComanda}" Style="{StaticResource TopBarButtonStyle}"/>
+                    </WrapPanel>
 
-                <Separator Width="16"/>
-                <Button Content="Nueva sesión" Command="{Binding CmdNuevaSesion}"/>
-                <Separator Width="16"/>
-                <Button Content="Abrir secundaria" Click="OnAbrirSecundariaClick"/>
-            </StackPanel>
+                    <Border Grid.Column="1" Width="1" Margin="16,0" Background="#D5DAE0" HorizontalAlignment="Center"/>
+
+                    <WrapPanel Grid.Column="2" VerticalAlignment="Center" ItemHeight="36" ItemWidth="150">
+                        <Button Content="Nueva sesión" Command="{Binding CmdNuevaSesion}" Style="{StaticResource TopBarButtonStyle}"/>
+                        <Button Content="Abrir secundaria" Click="OnAbrirSecundariaClick" Style="{StaticResource TopBarButtonStyle}"/>
+                    </WrapPanel>
+                </Grid>
+
+                <Border Grid.Column="2" Background="White" Padding="10,8" CornerRadius="10"
+                        BorderBrush="#D5DAE0" BorderThickness="1" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+                        <Ellipse Width="10" Height="10" Fill="#8B8B99" VerticalAlignment="Center"/>
+                        <TextBlock Text="Sesión activa" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Border>
 
         <Grid>
