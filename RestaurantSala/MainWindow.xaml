@@ -15,9 +15,9 @@
             <Setter Property="Margin" Value="0,0,10,0"/>
         </Style>
         <Style x:Key="TopBarButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-            <Setter Property="Padding" Value="14,9"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="MinWidth" Value="110"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
         </Style>
     </Window.Resources>
     <DockPanel>
@@ -37,7 +37,7 @@
             </MenuItem>
 
         </Menu>
-        <Border DockPanel.Dock="Top" Background="#EEF1F5" Padding="14">
+        <Border DockPanel.Dock="Top" Background="#EEF1F5" Padding="10">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -79,8 +79,8 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.6*"/>
+                <ColumnDefinition Width="2.4*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -115,12 +115,12 @@
             <Border Grid.Column="1" Margin="12" Padding="4" Background="White" BorderBrush="{StaticResource PanelBorderBrush}"
                     BorderThickness="1" CornerRadius="{StaticResource PanelCornerRadius}">
                 <TabControl Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                            Background="Transparent" BorderThickness="0">
+                            Background="#EEF1F5" BorderThickness="0">
                     <TabControl.Resources>
                         <Style TargetType="TabItem">
-                            <Setter Property="Padding" Value="14,10"/>
-                            <Setter Property="Margin" Value="0,0,8,0"/>
-                            <Setter Property="Background" Value="#F7F9FB"/>
+                            <Setter Property="Padding" Value="10,7"/>
+                            <Setter Property="Margin" Value="0,0,4,0"/>
+                            <Setter Property="Background" Value="#EEF1F5"/>
                             <Setter Property="BorderBrush" Value="{StaticResource PanelBorderBrush}"/>
                             <Setter Property="BorderThickness" Value="1"/>
                             <Setter Property="Template">
@@ -134,7 +134,7 @@
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Border" Property="Background" Value="White"/>
+                                                <Setter TargetName="Border" Property="Background" Value="#F7F9FB"/>
                                             </Trigger>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="Border" Property="Background" Value="#FBFBFD"/>
