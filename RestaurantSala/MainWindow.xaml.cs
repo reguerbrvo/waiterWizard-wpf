@@ -173,7 +173,14 @@ namespace RestaurantSala
         {
             PlanoSala.Children.Clear();
 
-            double cellW = 160, cellH = 140;
+            double cellW = 160, cellH = 140, mesaSize = 90, padding = 40;
+            int mesasCount = ViewModel.Mesas.Count;
+            int columnasUsadas = mesasCount > 0 ? Math.Min(3, mesasCount) : 1;
+            int filasUsadas = mesasCount > 0 ? (int)Math.Ceiling(mesasCount / 3.0) : 1;
+
+            PlanoSala.Width = padding * 2 + (columnasUsadas - 1) * cellW + mesaSize;
+            PlanoSala.Height = padding * 2 + (filasUsadas - 1) * cellH + mesaSize;
+
             int col = 0, fil = 0;
 
             foreach (var mesa in ViewModel.Mesas)
@@ -188,8 +195,8 @@ namespace RestaurantSala
                     Tag = mesa.Id
                 };
 
-                double x = 40 + col * cellW;
-                double y = 40 + fil * cellH;
+                double x = padding + col * cellW;
+                double y = padding + fil * cellH;
                 Canvas.SetLeft(el, x);
                 Canvas.SetTop(el, y);
                 PlanoSala.Children.Add(el);
