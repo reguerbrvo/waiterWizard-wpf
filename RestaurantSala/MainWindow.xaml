@@ -54,9 +54,31 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Canvas Grid.Column="0" x:Name="PlanoSala"
-              Background="#FFF8F8F8"
-              MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" Margin="0,0,549,0" />
+            <Grid Grid.Column="0">
+                <Canvas x:Name="PlanoSala"
+                  Background="#FFF8F8F8"
+                  MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" Margin="0,0,549,0" />
+
+                <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12"
+                        Padding="10" Background="White" CornerRadius="8"
+                        BorderBrush="#D0D7E2" BorderThickness="1" Opacity="0.95">
+                    <StackPanel>
+                        <TextBlock Text="Leyenda" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Rectangle Width="14" Height="14" Fill="#4E79A7" Stroke="#6B7280" StrokeThickness="0.6"/>
+                            <TextBlock Text="Primeros" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Rectangle Width="14" Height="14" Fill="#59A14F" Stroke="#6B7280" StrokeThickness="0.6"/>
+                            <TextBlock Text="Segundos" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="14" Height="14" Fill="#F28E2B" Stroke="#6B7280" StrokeThickness="0.6"/>
+                            <TextBlock Text="Postres" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
 
             <TabControl Grid.Column="1" Margin="12" Padding="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <TabItem Header="Detalle" Padding="0">
