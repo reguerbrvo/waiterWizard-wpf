@@ -61,6 +61,8 @@
     <Compile Include="VentanaSecundaria.xaml.cs">
       <DependentUpon>VentanaSecundaria.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EstadoToBrushConverter.cs" />
+    <Compile Include="Converters\OcupacionToBrushConverter.cs" />
     <Compile Include="ViewModels\ComandaEditorVIewModel.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
