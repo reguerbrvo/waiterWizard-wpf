@@ -115,6 +115,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\waiterWizardIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\RestaurantSala.Core\RestaurantSala.Core.csproj">
       <Project>{f2ce7acf-4093-437c-8db8-7b4c1d8f8177}</Project>
       <Name>RestaurantSala.Core</Name>
