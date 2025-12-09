@@ -1,7 +1,8 @@
-﻿<Window x:Class="RestaurantSala.VentanaSecundaria"
+<Window x:Class="RestaurantSala.VentanaSecundaria"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Resumen de Mesas y Comandas" Width="900" Height="500">
+        Title="Resumen de Mesas y Comandas" Width="900" Height="500"
+        Icon="Assets/waiterWizardIcon.png">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
