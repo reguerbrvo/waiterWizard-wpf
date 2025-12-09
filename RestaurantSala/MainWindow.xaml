@@ -57,7 +57,10 @@
             <Grid Grid.Column="0">
                 <Canvas x:Name="PlanoSala"
                   Background="#FFF8F8F8"
-                  MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown" Margin="0,0,549,0" />
+                  MouseLeftButtonDown="OnPlanoSalaMouseLeftButtonDown"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  Margin="12" />
 
                 <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12"
                         Padding="10" Background="White" CornerRadius="8"
