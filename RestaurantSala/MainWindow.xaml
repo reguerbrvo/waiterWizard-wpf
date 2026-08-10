@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:conv="clr-namespace:RestaurantSala.Converters"
         Title="waiterWizard" Width="1100" Height="700"
-        Icon="Assets/waiterWizardIcon.png">
+        Icon="Assets/waiterWizardIcon.png"
+        Background="#FFE4F1">
     <Window.Resources>
         <conv:EstadoToBrushConverter x:Key="EstadoToBrushConverter"/>
         <conv:OcupacionToBrushConverter x:Key="OcupacionToBrushConverter"/>
@@ -20,7 +21,7 @@
             <Setter Property="Margin" Value="0,0,8,0"/>
         </Style>
     </Window.Resources>
-    <DockPanel>
+    <DockPanel Background="#FFE4F1">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Archivo">
                 <MenuItem Header="_Guardar sesión..." Click="OnGuardarSesionClick"/>
